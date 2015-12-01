@@ -1,15 +1,13 @@
 # TranslatableColumn
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/translatable_column`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+TranslatableColumn give some facilities to select the right field in function of the locale.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'translatable_column'
+gem "translatable_column", github: "sortlist/translatable_column"
 ```
 
 And then execute:
@@ -22,7 +20,44 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add an initializer eventually_tracker.rb.
+
+```ruby
+TranslatableColumn.configure do |config|
+  config.locales          = ["en", "fr"]
+  config.fallback         = "en" # a locale present on config.locales or nil
+  config.only_main_locale = true # use only "en" when locale is "en-gb"
+end
+```
+
+In model
+
+```ruby
+# ## Schema Information
+#
+# Table name: `agencies`
+#
+# ### Columns
+#
+# Name                  | Type               | Attributes
+# --------------------- | ------------------ | ---------------------------
+# **`created_at`**      | `datetime`         | `not null`
+# **`description_en`**  | `text`             |
+# **`description_fr`**  | `string`           |
+# **`id`**              | `integer`          | `not null, primary key`
+# **`name_en`**         | `string`           |
+# **`name_fr`**         | `string`           |
+# **`updated_at`**      | `datetime`         | `not null`
+class Agency < ActiveRecord::Base
+  translatable :name, :description
+end
+
+Agency.translated_attributes :name # [:name_en, :name_fr]
+I18n.locale # :en
+Agency.first.name # "Agency"
+I18n.locale = :fr
+Agency.first.name # "Agence"
+```
 
 ## Development
 
@@ -32,10 +67,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/translatable_column. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/sortlist/translatable_column. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-

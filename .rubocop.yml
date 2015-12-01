@@ -1,0 +1,72 @@
+AllCops:
+  RunRailsCops: true
+AlignHash:
+  # Alignment of entries using hash rocket as separator. Valid values are:
+  #
+  # key - left alignment of keys
+  # 'a' => 2
+  # 'bb' => 3
+  # separator - alignment of hash rockets, keys are right aligned
+  # 'a' => 2
+  # 'bb' => 3
+  # table - left alignment of keys, hash rockets, and values
+  # 'a' => 2
+  # 'bb' => 3
+  EnforcedHashRocketStyle: table
+  # Alignment of entries using colon as separator. Valid values are:
+  #
+  # key - left alignment of keys
+  # a: 0
+  # bb: 1
+  # separator - alignment of colons, keys are right aligned
+  # a: 0
+  # bb: 1
+  # table - left alignment of keys and values
+  # a: 0
+  # bb: 1
+  EnforcedColonStyle: table
+IfUnlessModifier:
+  MaxLineLength: 100
+StringLiterals:
+  EnforcedStyle: double_quotes
+WhileUntilModifier:
+  MaxLineLength: 100
+MethodCalledOnDoEndBlock:
+  Description: 'Avoid chaining a method call on a do...end block.'
+  Enabled: true
+ClassLength:
+  Max: 400
+Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  # Checks the style of children definitions at classes and modules.
+  #
+  # Basically there are two different styles:
+  #
+  # `nested` - have each child on a separate line
+  # class Foo
+  # class Bar
+  # end
+  # end
+  #
+  # `compact` - combine definitions as much as possible
+  # class Foo::Bar
+  # end
+  #
+  # The compact style is only forced, for classes / modules with one child.
+  EnforcedStyle: compact
+Style/WordArray:
+  Description: 'Use %w or %W for arrays of words.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#percent-w'
+  Enabled: false
+
+# Indentation of `when`.
+Style/CaseIndentation:
+  IndentWhenRelativeTo: case
+  SupportedStyles:
+    - case
+    - end
+  IndentOneStep: true
+
+Metrics/LineLength:
+    Max: 100
