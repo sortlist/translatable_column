@@ -12,7 +12,8 @@ module TranslatableColumn
   end
 
   configure do |config|
-    config.locales  = ["en", "fr"]
-    config.fallback = true
+    config.locales          = ["en", "fr"]
+    config.fallback         = true
+    config.only_main_locale = true
   end
 end
