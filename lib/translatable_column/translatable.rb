@@ -9,6 +9,12 @@ module TranslatableColumn
       def locale
         self.class.locale
       end
+
+      private
+
+      def used_locale?
+        ::TranslatableColumn.config.locales.include?(locale)
+      end
     end
 
     module ClassMethods
@@ -42,10 +48,6 @@ module TranslatableColumn
       end
 
       private
-
-      def used_locale?
-        ::TranslatableColumn.config.locales.include?(locale)
-      end
 
       def define_translation(field)
         define_method(field.to_sym) do
