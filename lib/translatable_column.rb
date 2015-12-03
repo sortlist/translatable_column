@@ -3,6 +3,16 @@ require "translatable_column/translatable"
 require "translatable_column/configuration"
 
 module TranslatableColumn
+  def locale
+    locale = I18n.locale.to_s
+    locale = locale.split("-").first if ::TranslatableColumn.config.only_main_locale
+    if ::TranslatableColumn.config.locales.any? { |authorized_locale| authorized_locale.to_s == locale }
+      locale
+    else
+      ::TranslatableColumn.config.default
+    end
+  end
+
   def self.configure
     yield config
   end
@@ -13,7 +23,8 @@ module TranslatableColumn
 
   configure do |config|
     config.locales          = ["en", "fr"]
-    config.fallback         = true
+    config.default          = "en"
+    config.fallback         = "en"
     config.only_main_locale = true
   end
 end

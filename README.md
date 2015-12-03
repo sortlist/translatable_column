@@ -28,8 +28,9 @@ Add an initializer eventually_tracker.rb.
 ```ruby
 TranslatableColumn.configure do |config|
   config.locales          = ["en", "fr"]
-  config.fallback         = "en" # a locale from config.locales or nil
-  config.only_main_locale = true # use only "en" when locale is "en-gb"
+  config.default          = Rails.configuration.i18n.default_locale.to_s # locale to use when current locale is not present in config.locales
+  config.fallback         = true # use default locale when the attribute is not present in current locale
+  config.only_main_locale = true # use only "en" when current locale is "en-GB"
 end
 ```
 
@@ -58,7 +59,8 @@ class Agency < ActiveRecord::Base
 end
 
 Agency.translated_attributes :name # [:name_en, :name_fr]
-I18n.locale # :en
+I18n.locale # :en-GB
+TranslatableColumn.locale # "en"
 Agency.first.name # "Agency"
 I18n.locale = :fr
 Agency.first.name # "Agence"
