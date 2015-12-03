@@ -77,5 +77,3 @@ module TranslatableColumn
     end
   end
 end
-
-ActiveRecord::Base.send :include, TranslatableColumn::Translatable

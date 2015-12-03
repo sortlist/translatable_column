@@ -2,6 +2,9 @@
 
 TranslatableColumn give some facilities to select the right field in function of the locale.
 
+Unlike the name, this gem can be also used on PORO object.
+The only dependency is that the object have a getter method for all locales for all translatable attributes (`<attribute>_<locale>`).
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -25,7 +28,7 @@ Add an initializer eventually_tracker.rb.
 ```ruby
 TranslatableColumn.configure do |config|
   config.locales          = ["en", "fr"]
-  config.fallback         = "en" # a locale present on config.locales or nil
+  config.fallback         = "en" # a locale from config.locales or nil
   config.only_main_locale = true # use only "en" when locale is "en-gb"
 end
 ```
@@ -49,6 +52,8 @@ In model
 # **`name_fr`**         | `string`           |
 # **`updated_at`**      | `datetime`         | `not null`
 class Agency < ActiveRecord::Base
+  include TranslatableColumn::Translatable
+
   translatable :name, :description
 end
 
