@@ -26,19 +26,19 @@ module TranslatableColumn
 
       def define_translation(field)
         define_method(field.to_sym) do
-          if send("#{field}_#{::Translatable.locale}").present?
-            send "#{field}_#{::Translatable.locale}"
+          if send("#{field}_#{::TranslatableColumn.locale}").present?
+            send "#{field}_#{::TranslatableColumn.locale}"
           elsif ::TranslatableColumn.config.fallback
             send "#{field}_#{::TranslatableColumn.config.default}"
           else
-            send "#{field}_#{::Translatable.locale}"
+            send "#{field}_#{::TranslatableColumn.locale}"
           end
         end
       end
 
       def define_column_name(field)
         define_singleton_method "#{field}_localized_column".to_sym do
-          "#{field}_#{::Translatable.locale}".to_sym
+          "#{field}_#{::TranslatableColumn.locale}".to_sym
         end
       end
 
