@@ -1,5 +1,10 @@
 module TranslatableColumn
   module Translatable
+    extend ActiveSupport::Concern
+
+    included do
+    end
+
     module ClassMethods
       def translatable(*fields)
         fields.each do |field|

@@ -3,7 +3,7 @@ require "translatable_column/translatable"
 require "translatable_column/configuration"
 
 module TranslatableColumn
-  def locale
+  def self.locale
     locale = I18n.locale.to_s
     locale = locale.split("-").first if ::TranslatableColumn.config.only_main_locale
     if ::TranslatableColumn.config.locales.any? { |authorized_locale| authorized_locale.to_s == locale }
