@@ -23,7 +23,7 @@ Or install it yourself as:
 
 ## Usage
 
-Add an initializer translatable_column.rb.
+Add an initializer eventually_tracker.rb.
 
 ```ruby
 TranslatableColumn.configure do |config|
@@ -55,7 +55,7 @@ In model
 class Agency < ActiveRecord::Base
   include TranslatableColumn::Translatable
 
-  translatable :name, :description, fallback: nil # fallback is optional
+  translatable :name, :description
 end
 
 Agency.translated_attributes :name # [:name_en, :name_fr]
