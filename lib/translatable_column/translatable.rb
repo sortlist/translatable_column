@@ -23,15 +23,17 @@ module TranslatableColumn
         end
       end
 
+      attr_reader :fallback
+
       private
 
-      attr_accessor :fallback
+      attr_writer :fallback
 
       def define_translation(field)
         define_method(field.to_sym) do
           if send("#{field}_#{::TranslatableColumn.locale}").present?
             send "#{field}_#{::TranslatableColumn.locale}"
-          elsif fallback
+          elsif self.class.fallback
             send "#{field}_#{::TranslatableColumn.config.default}"
           else
             send "#{field}_#{::TranslatableColumn.locale}"
