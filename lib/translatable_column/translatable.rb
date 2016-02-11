@@ -6,7 +6,8 @@ module TranslatableColumn
     end
 
     module ClassMethods
-      def translatable(*fields)
+      def translatable(*fields, fallback: ::TranslatableColumn.config.fallback)
+        self.fallback = fallback
         fields.each do |field|
           define_translation field
           define_column_name field
@@ -24,11 +25,13 @@ module TranslatableColumn
 
       private
 
+      attr_accessor :fallback
+
       def define_translation(field)
         define_method(field.to_sym) do
           if send("#{field}_#{::TranslatableColumn.locale}").present?
             send "#{field}_#{::TranslatableColumn.locale}"
-          elsif ::TranslatableColumn.config.fallback
+          elsif fallback
             send "#{field}_#{::TranslatableColumn.config.default}"
           else
             send "#{field}_#{::TranslatableColumn.locale}"
