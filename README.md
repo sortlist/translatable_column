@@ -55,7 +55,7 @@ In model
 class Agency < ActiveRecord::Base
   include TranslatableColumn::Translatable
 
-  translatable :name, :description, fallback: nil # fallback is optional
+  translatable :name, :description, fallback: false # fallback is optional
 end
 
 Agency.translated_attributes :name # [:name_en, :name_fr]
